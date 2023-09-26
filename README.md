@@ -1,3 +1,6 @@
+[![Test](https://github.com/iwate/ODataHttpClient.Generators/actions/workflows/test.yml/badge.svg)](https://github.com/iwate/ODataHttpClient.Generators/actions/workflows/test.yml)
+[![NuGet version](https://badge.fury.io/nu/ODataHttpClient.Generators.svg)](https://badge.fury.io/nu/ODataHttpClient.Generators)
+
 # ODataHttpClient.Generators
 
 Utilities of Source Generators for [ODataHttpClient](https://github.com/iwate/ODataHttpClient)

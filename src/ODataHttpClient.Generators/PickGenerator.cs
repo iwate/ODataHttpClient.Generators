@@ -108,7 +108,12 @@ public class PickGenerator : IIncrementalGenerator
             .Cast<IPropertySymbol>()
             .ToList();
         var srcPropertyNames = srcProperties.Select(p => p.Name).ToArray();
-        var dstPropertyNames = attr.ConstructorArguments.Last().Values.Select(v => v.Value as string).ToArray();
+        var dstPropertyNames = attr.ConstructorArguments.SelectMany(arg => arg.Kind switch
+        {
+            TypedConstantKind.Primitive => new[] { arg.Value as string },
+            TypedConstantKind.Array => arg.Values.Select(v => v.Value as string),
+            _ => new string[0],
+        }).Where(name => name != null).ToArray();
         var illegalNames = dstPropertyNames.Except(srcPropertyNames);
 
         if (illegalNames.Any())

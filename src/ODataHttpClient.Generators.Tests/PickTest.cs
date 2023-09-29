@@ -187,3 +187,12 @@ public partial class Class1Prop23 { }
 
 [Pick<Microsoft.Spatial.Geography>(nameof(Microsoft.Spatial.Geography.IsEmpty))]
 public partial class Geo { }
+
+[Pick(typeof(ODataDemo.Product), nameof(ODataDemo.Product.ID), "Name")]
+public partial class ProductSummary_2 { }
+
+[Pick(typeof(ReferenceEntitites.Class1), nameof(ReferenceEntitites.Class1.Prop2), "Prop3")]
+public partial class Class1Prop23_2 { }
+
+[Pick(typeof(Microsoft.Spatial.Geography), nameof(Microsoft.Spatial.Geography.IsEmpty))]
+public partial class Geo_2 { }

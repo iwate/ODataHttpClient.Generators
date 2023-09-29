@@ -25,23 +25,23 @@ namespace ODataHttpClient.Generators.Tests
             Assert.Equal(5, addr.Properties.Count);
 
             Assert.Equal("Street", addr.Properties.ElementAt(0).Name);
-            Assert.Equal("string?", addr.Properties.ElementAt(0).ClrType);
+            Assert.Equal("string", addr.Properties.ElementAt(0).ClrType);
             Assert.True(addr.Properties.ElementAt(0).Nullable);
 
             Assert.Equal("City", addr.Properties.ElementAt(1).Name);
-            Assert.Equal("string?", addr.Properties.ElementAt(1).ClrType);
+            Assert.Equal("string", addr.Properties.ElementAt(1).ClrType);
             Assert.True(addr.Properties.ElementAt(1).Nullable);
 
             Assert.Equal("State", addr.Properties.ElementAt(2).Name);
-            Assert.Equal("string?", addr.Properties.ElementAt(2).ClrType);
+            Assert.Equal("string", addr.Properties.ElementAt(2).ClrType);
             Assert.True(addr.Properties.ElementAt(2).Nullable);
 
             Assert.Equal("ZipCode", addr.Properties.ElementAt(3).Name);
-            Assert.Equal("string?", addr.Properties.ElementAt(3).ClrType);
+            Assert.Equal("string", addr.Properties.ElementAt(3).ClrType);
             Assert.True(addr.Properties.ElementAt(3).Nullable);
 
             Assert.Equal("Country", addr.Properties.ElementAt(4).Name);
-            Assert.Equal("string?", addr.Properties.ElementAt(4).ClrType);
+            Assert.Equal("string", addr.Properties.ElementAt(4).ClrType);
             Assert.True(addr.Properties.ElementAt(4).Nullable);
 
             var supplier = ns.First().Classes.ElementAt(5);
@@ -55,15 +55,15 @@ namespace ODataHttpClient.Generators.Tests
             Assert.False(supplier.Properties.ElementAt(0).Nullable);
 
             Assert.Equal("Name", supplier.Properties.ElementAt(1).Name);
-            Assert.Equal("string?", supplier.Properties.ElementAt(1).ClrType);
+            Assert.Equal("string", supplier.Properties.ElementAt(1).ClrType);
             Assert.True(supplier.Properties.ElementAt(1).Nullable);
 
             Assert.Equal("Address", supplier.Properties.ElementAt(2).Name);
-            Assert.Equal("ODataDemo.Address?", supplier.Properties.ElementAt(2).ClrType);
+            Assert.Equal("ODataDemo.Address", supplier.Properties.ElementAt(2).ClrType);
             Assert.True(supplier.Properties.ElementAt(2).Nullable);
 
             Assert.Equal("Location", supplier.Properties.ElementAt(3).Name);
-            Assert.Equal("Microsoft.Spatial.GeographyPoint?", supplier.Properties.ElementAt(3).ClrType);
+            Assert.Equal("Microsoft.Spatial.GeographyPoint", supplier.Properties.ElementAt(3).ClrType);
             Assert.True(supplier.Properties.ElementAt(3).Nullable);
 
             Assert.Equal("Concurrency", supplier.Properties.ElementAt(4).Name);
@@ -71,7 +71,7 @@ namespace ODataHttpClient.Generators.Tests
             Assert.False(supplier.Properties.ElementAt(4).Nullable);
 
             Assert.Equal("Products", supplier.Properties.ElementAt(5).Name);
-            Assert.Equal("System.Collections.Generic.ICollection<ODataDemo.Product>?", supplier.Properties.ElementAt(5).ClrType);
+            Assert.Equal("System.Collections.Generic.ICollection<ODataDemo.Product>", supplier.Properties.ElementAt(5).ClrType);
             Assert.True(supplier.Properties.ElementAt(5).Nullable);
         }
 

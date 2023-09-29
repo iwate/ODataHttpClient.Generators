@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace ODataHttpClient.Generators
@@ -32,19 +32,20 @@ namespace ODataHttpClient.Generators
             {
                 get
                 {
-                    string type = null;
+                    string type;
+                    bool primitiveOrStruct;
                     if (EdmType.StartsWith(PREFIX_COLLECTION))
                     {
                         var edmType = EdmType.Substring(PREFIX_COLLECTION.Length, EdmType.Length - PREFIX_COLLECTION.Length - 1);
-                        type = TransformToClrType(edmType);
+                        (type, primitiveOrStruct) = TransformToClrType(edmType);
                         type = $"System.Collections.Generic.ICollection<{type}>";
                     }
                     else
                     {
-                        type = TransformToClrType(EdmType);
+                        (type, primitiveOrStruct) = TransformToClrType(EdmType);
                     }
 
-                    if (Nullable)
+                    if (Nullable && primitiveOrStruct)
                         return type + "?";
 
                     return type;
@@ -59,46 +60,46 @@ namespace ODataHttpClient.Generators
                 Nullable = el.Attribute("Nullable")?.Value != "false";
             }
 
-            private static string TransformToClrType(string edmType)
+            private static (string type, bool primitiveOrStruct) TransformToClrType(string edmType)
             {
                 if (!edmType.StartsWith("Edm."))
-                    return edmType;
+                    return (edmType, false);
 
                 switch (edmType)
                 {
-                    case "Edm.Binary": return "byte[]";
-                    case "Edm.Boolean": return "bool";
-                    case "Edm.Byte": return "byte";
-                    case "Edm.Date": return "System.DateOnly";
-                    case "Edm.DateTimeOffset": return "System.DateTimeOffset";
-                    case "Edm.Decimal": return "decimal";
-                    case "Edm.Double": return "double";
-                    case "Edm.Duration": return "System.TimeSpan";
-                    case "Edm.Guid": return "System.Guid";
-                    case "Edm.Int16": return "short";
-                    case "Edm.Int32": return "int";
-                    case "Edm.Int64": return "long";
-                    case "Edm.SByte": return "sbyte";
-                    case "Edm.Single": return "float";
-                    case "Edm.Stream": return "System.IO.Stream";
-                    case "Edm.String": return "string";
-                    case "Edm.TimeOfDay": return "System.TimeSpan";
-                    case "Edm.Geography": return "Microsoft.Spatial.Geography";
-                    case "Edm.GeographyPoint": return "Microsoft.Spatial.GeographyPoint";
-                    case "Edm.GeographyLineString": return "Microsoft.Spatial.GeographyLineString";
-                    case "Edm.GeographyPolygon": return "Microsoft.Spatial.GeographyPolygon";
-                    case "Edm.GeographyMultiPoint": return "Microsoft.Spatial.GeographyMultiPoint";
-                    case "Edm.GeographyMultiLineString": return "Microsoft.Spatial.GeographyMultiLineString";
-                    case "Edm.GeographyMultiPolygon": return "Microsoft.Spatial.GeographyMultiPolygon";
-                    case "Edm.GeographyCollection": return "Microsoft.Spatial.GeographyCollection";
-                    case "Edm.Geometry": return "Microsoft.Spatial.Geometry";
-                    case "Edm.GeometryPoint": return "Microsoft.Spatial.GeometryPoint";
-                    case "Edm.GeometryLineString": return "Microsoft.Spatial.GeometryLineString";
-                    case "Edm.GeometryPolygon": return "Microsoft.Spatial.GeometryPolygon";
-                    case "Edm.GeometryMultiPoint": return "Microsoft.Spatial.GeometryMultiPoint";
-                    case "Edm.GeometryMultiLineString": return "Microsoft.Spatial.GeometryMultiLineString";
-                    case "Edm.GeometryMultiPolygon": return "Microsoft.Spatial.GeometryMultiPolygon";
-                    case "Edm.GeometryCollection": return "Microsoft.Spatial.GeometryCollection";
+                    case "Edm.Binary": return ("byte[]", false);
+                    case "Edm.Boolean": return ("bool", true);
+                    case "Edm.Byte": return ("byte", true);
+                    case "Edm.Date": return ("System.DateOnly", true);
+                    case "Edm.DateTimeOffset": return ("System.DateTimeOffset", true);
+                    case "Edm.Decimal": return ("decimal", true);
+                    case "Edm.Double": return ("double", true);
+                    case "Edm.Duration": return ("System.TimeSpan", true);
+                    case "Edm.Guid": return ("System.Guid", true);
+                    case "Edm.Int16": return ("short", true);
+                    case "Edm.Int32": return ("int", true);
+                    case "Edm.Int64": return ("long", true);
+                    case "Edm.SByte": return ("sbyte", true);
+                    case "Edm.Single": return ("float", true);
+                    case "Edm.Stream": return ("System.IO.Stream", false);
+                    case "Edm.String": return ("string", false);
+                    case "Edm.TimeOfDay": return ("System.TimeSpan", true);
+                    case "Edm.Geography": return ("Microsoft.Spatial.Geography", false);
+                    case "Edm.GeographyPoint": return ("Microsoft.Spatial.GeographyPoint", false);
+                    case "Edm.GeographyLineString": return ("Microsoft.Spatial.GeographyLineString", false);
+                    case "Edm.GeographyPolygon": return ("Microsoft.Spatial.GeographyPolygon", false);
+                    case "Edm.GeographyMultiPoint": return ("Microsoft.Spatial.GeographyMultiPoint", false);
+                    case "Edm.GeographyMultiLineString": return ("Microsoft.Spatial.GeographyMultiLineString", false);
+                    case "Edm.GeographyMultiPolygon": return ("Microsoft.Spatial.GeographyMultiPolygon", false);
+                    case "Edm.GeographyCollection": return ("Microsoft.Spatial.GeographyCollection", false);
+                    case "Edm.Geometry": return ("Microsoft.Spatial.Geometry", false);
+                    case "Edm.GeometryPoint": return ("Microsoft.Spatial.GeometryPoint", false);
+                    case "Edm.GeometryLineString": return ("Microsoft.Spatial.GeometryLineString", false);
+                    case "Edm.GeometryPolygon": return ("Microsoft.Spatial.GeometryPolygon", false);
+                    case "Edm.GeometryMultiPoint": return ("Microsoft.Spatial.GeometryMultiPoint", false);
+                    case "Edm.GeometryMultiLineString": return ("Microsoft.Spatial.GeometryMultiLineString", false);
+                    case "Edm.GeometryMultiPolygon": return ("Microsoft.Spatial.GeometryMultiPolygon", false);
+                    case "Edm.GeometryCollection": return ("Microsoft.Spatial.GeometryCollection", false);
                     default:
                         throw new NotSupportedException(edmType);
                 }
@@ -128,7 +129,7 @@ namespace ODataHttpClient.Generators
             public ICollection<Class> Classes { get; }
 
             public Namespace() { }
-            public Namespace(XElement el) 
+            public Namespace(XElement el)
             {
                 Name = el.Attribute("Namespace").Value;
                 Classes = el.Descendants(xmlns + "ComplexType")

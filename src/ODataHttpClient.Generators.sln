@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataHttpClient.Generators", "ODataHttpClient.Generators\ODataHttpClient.Generators.csproj", "{7390F2F9-A192-477B-A09A-82ED60A8C7EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataHttpClient.Generators.Tests", "..\test\ODataHttpClient.Generators.Tests\ODataHttpClient.Generators.Tests.csproj", "{D415A863-99D1-4CC2-BACD-60B9F2B1AD64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataHttpClient.Generators.Tests", "ODataHttpClient.Generators.Tests\ODataHttpClient.Generators.Tests.csproj", "{D415A863-99D1-4CC2-BACD-60B9F2B1AD64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReferenceEntitites", "..\test\ReferenceEntitites\ReferenceEntitites.csproj", "{0EA3921A-4052-4F7D-9F11-1724B87B9D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReferenceEntitites", "ReferenceEntitites\ReferenceEntitites.csproj", "{0EA3921A-4052-4F7D-9F11-1724B87B9D8C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F8E6529-CC9F-4837-AF61-F144957FF282}"
 EndProject

@@ -179,10 +179,10 @@ public class Category
     public virtual ICollection<Product> Products { get; set; } 
 }
 
-[Pick<ODataDemo.Product>("ID", "Name")]
+[Pick<ODataDemo.Product>(nameof(ODataDemo.Product.ID), "Name")]
 public partial class ProductSummary { }
 
-[Pick<ReferenceEntitites.Class1>("Prop2", "Prop3")]
+[Pick<ReferenceEntitites.Class1>(nameof(ReferenceEntitites.Class1.Prop2), "Prop3")]
 public partial class Class1Prop23 { }
 
 [Pick<Microsoft.Spatial.Geography>(nameof(Microsoft.Spatial.Geography.IsEmpty))]

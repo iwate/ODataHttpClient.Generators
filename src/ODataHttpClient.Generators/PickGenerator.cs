@@ -182,15 +182,27 @@ public class PickGenerator : IIncrementalGenerator
             if (!hasCreatedMethod)
                 return string.Empty;
 
-            if (srcIsEnumerable)
-                return $$"""
-                if (src.{{name}} != null) this.{{name}} = src.{{name}}.Select({{dstType.Name}}.Create).ToList();
-                """;
-
+            if (dst.IsVirtual)
+            {
+                if (srcIsEnumerable)
+                {
+                    return $$"""
+                        if (src.{{name}} != null) this.{{name}} = src.{{name}}.Select({{dstType.Name}}.Create).ToList();
+                        """;
+                }
+                else
+                {
+                    return $$"""
+                        this.{{name}} = {{dstType.Name}}.Create(src.{{name}});
+                        """;
+                }
+            }
             else
+            {
                 return $$"""
-                this.{{name}} = src.{{name}};
-                """;
+                    this.{{name}} = src.{{name}};
+                    """;
+            }
         }
 
         var usingDirectives = GetUsingDirectives(srcType).Select(DeclareUsing).Concat(new[] { "using System.Linq;" }).Distinct();

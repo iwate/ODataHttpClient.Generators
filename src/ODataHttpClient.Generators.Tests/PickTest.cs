@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -134,6 +135,32 @@ public class PickTest
         Assert.Equal(product.Categories.ElementAt(1).Id, obj.Categories.ElementAt(1).Id);
         Assert.Equal(product.Categories.ElementAt(2).Id, obj.Categories.ElementAt(2).Id);
     }
+
+    [Fact]
+    public void NestedAssign2()
+    {
+        var product = new Product
+        {
+            Id = 1,
+            Name = "Test",
+            UnitPrice = 100m,
+            SalesStart = DTO.Parse("2023-09-24T00:00:00Z"),
+            Parent = new Product
+            {
+                Id = 2,
+                Name = "Test2",
+                UnitPrice = 200m,
+                SalesStart = DTO.Parse("2024-04-17T00:00:00Z"),
+            }
+        };
+
+        var obj = new ProductIdParent();
+        obj.Assign(product);
+
+        Assert.Equal(product.Id, obj.Id);
+        Assert.Equal(product.Parent.Id, obj.Parent.Id);
+        Assert.Equal(product.Parent.Name, obj.Parent.Name);
+    }
 }
 
 public class Product
@@ -143,6 +170,8 @@ public class Product
     public decimal UnitPrice { get; set; }
     public DTO SalesStart { get; set; }
     public virtual ICollection<Category> Categories { get; set; }
+    public virtual Product Parent { get; set; }
+    public virtual ICollection<Product> Children { get; set; }
 }
 
 [Pick(typeof(Product), nameof(Product.Id), nameof(Product.Name))]
@@ -170,6 +199,12 @@ public partial class ProductIdAndNameWithCategoryId
 [Pick<Category>(nameof(Category.Id))]
 public partial class CategoryId
 {
+}
+
+[Pick<Product>(nameof(Product.Id))]
+public partial class ProductIdParent
+{
+    public virtual ProductIdAndName Parent { get; set; }
 }
 
 public class Category
